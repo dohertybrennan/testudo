@@ -5,16 +5,16 @@
 #  * Path: /home/brennan/build_root/testudo
 #  * Created Date: Saturday, March 4th 2023, 12:50:18 am
 #  * Author: brennan
-#  * 
-#  * Copyright (c) 2023 
+#  *
+#  * Copyright (c) 2023
 #  */
 
 #### Functions ####
 
 ## Initial Check - Sees if we actually have this setup
 
-# User Check - Do we have the appropriate user setup on this machine 
-testudo_user_check () {
+# User Check - Do we have the appropriate user setup on this machine
+testudo_user_check() {
     USER_EXISTS=$(cat /etc/passwd | cut -d ':' -f 1 | grep testudo)
 
     if [[ -z "$USER_EXISTS" ]]; then
@@ -25,55 +25,52 @@ testudo_user_check () {
 #
 
 # Main
-testudo_init_checks () {
-    testudo_user_check;
+testudo_init_checks() {
+    testudo_user_check
 }
 #
 
-## 
-
+##
 
 ## Scripts
 
 # Main
 ## TODO Write logic for calling scripts. Trying to avoid nesting mulitple cases. Maybe more functions? :s
-scripts () {
+scripts() {
     for ARG in "$@"; do
         case $ARG in
-            scripts)
-                :
-                ;;
-            --*)
-                echo "Double Option ${ARG}"
-                ;;
-            -?)
-                echo "Option ${ARG}"
-                ;;
+        scripts)
+            :
+            ;;
+        --*)
+            echo "Double Option ${ARG}"
+            ;;
+        -?)
+            echo "Option ${ARG}"
+            ;;
 
-            *)
-                echo "Assuming Script ${ARG}"
-                ;;
+        *)
+            echo "Assuming Script ${ARG}"
+            ;;
         esac
     done
 }
 
-
-main () {
-    testudo_init_checks;
+main() {
+    testudo_init_checks
 
     case $1 in
 
-        scripts)
-            scripts "$@"
-            ;;
-        *)
-            echo help
-            ;;
-            
+    scripts)
+        scripts "$@"
+        ;;
+    *)
+        echo help
+        ;;
+
     esac
 
 }
-
 
 #### Entrypoint ####
 main "$@"
